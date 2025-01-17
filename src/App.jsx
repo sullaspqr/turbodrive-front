@@ -11,19 +11,28 @@ export const App=() => {
   const vantaRef = useRef(null);
 
   useEffect(() => {
-    const vantaEffect = WAVES({
-      el: vantaRef.current,
-      THREE,
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      color: 0x1e90ff,
-      shininess: 50,
-      waveHeight: 20,
-      waveSpeed: 1.5,
-      zoom: 1.2,
-    });
-
+    let vantaEffect;
+    if (vantaRef.current) {
+      try {
+        vantaEffect = WAVES({
+          el: vantaRef.current,
+          THREE,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 150.0,
+          minWidth: 150.0,
+          scale: 1.0,
+          scaleMobile: 1.0,
+          backgroundColor: 0x001f3f,
+          color1: 0xff4500,
+          color2: 0x28a745,
+        });
+      } catch (error) {
+        console.error("[vanta.js] waves init error:", error);
+      }
+    }
+  
     return () => {
       if (vantaEffect) vantaEffect.destroy();
     };
